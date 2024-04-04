@@ -15,37 +15,24 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: NuGetToolInstaller@1
 
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
   inputs:
-    restoreSolution: '$(solution)'
-# - task: DotNetCoreCLI@2
-#   inputs:
-#     command: 'restore'
-#     projects: '$(solution)'
-#     feedsToUse: 'select'
-#     vstsFeed: '21a2b76d-ed9a-4e8c-ad00-78c5d466b8e5/e46c4083-5e33-4890-bb58-acdbf86833ec'
+    command: 'restore'
+    projects: '$(solution)'
+    feedsToUse: 'select'
+    vstsFeed: '21a2b76d-ed9a-4e8c-ad00-78c5d466b8e5/e46c4083-5e33-4890-bb58-acdbf86833ec'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
     projects: '$(solution)'
 
-# - task: VSBuild@1
-#   displayName: 'this is the build'
-#   inputs:
-#     solution: '$(solution)'
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj'
-    versioningScheme: 'byPrereleaseNumber'
-    majorVersion: '1'
-    minorVersion: '0'
-    patchVersion: '0'
-
+    nobuild: true
+    versioningScheme: 'off'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'push'
